@@ -1,0 +1,53 @@
+#include <stdio.h>
+const int INF=1e8;
+int main()
+{
+    int t,test=1;
+    scanf("%d",&t);
+    while(t--) {
+        int n,e,u,v,i,j,k;
+        scanf("%d %d",&n,&e);
+        int graph[101][101]={};
+        for(i = 0; i < n; i++)
+        {
+            for(j = 0; j < n; j++)
+            {
+                if(i == j)graph[i][j]=0;
+                else   graph[i][j] = INF;
+            }
+        }
+            
+                
+        while(e--) {
+            scanf("%d %d",&u,&v);
+            graph[u][v] = 1;
+            graph[v][u] = 1;
+        }
+        int s,t;
+        scanf("%d %d",&s,&t);
+        for(k = 0; k < n; k++)
+        {
+            for(i = 0; i < n; i++)
+            {
+                for(j = 0; j < n; j++)
+                {
+                    if(graph[i][k]+graph[k][j]<graph[i][j])
+                    {
+                        graph[i][j] = graph[i][k]+graph[k][j];
+                    }
+                }
+            }
+        }           
+        int ans = 0;
+        for(i = 0; i < n; i++)
+        {
+            if(graph[s][i]+graph[i][t]>ans)
+            {
+                ans=graph[s][i]+graph[i][t];
+            }
+        }
+        printf("Case %d: %d\n",test,ans);
+        test++;
+    }
+    return 0;
+}
